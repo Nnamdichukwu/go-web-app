@@ -4,5 +4,6 @@ import "html/template"
 
 //AppConfig holds the application config
 type AppConfig struct{
-	TemplateCache map[string]*template.Template
+	UseCache 		bool
+	TemplateCache 	map[string]*template.Template
 }
