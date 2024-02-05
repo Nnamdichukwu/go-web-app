@@ -14,8 +14,10 @@ func routes(app *config.AppConfig) http.Handler{
 	mux.Use(middleware.Recoverer) // this is a middleware that absorb panics and prints the stack trace
 	mux.Use(WriteToConsole)
 	mux.Use(NoSurf)
+	mux.Use(SessionLoad)
 	mux.Get("/", handlers.Repo.Home)
 	mux.Get("/about", handlers.Repo.About)
 	return mux
 
 }
+
