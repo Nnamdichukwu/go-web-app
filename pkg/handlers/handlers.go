@@ -4,8 +4,10 @@ import (
 	"net/http"
 
 	"github.com/Nnamdichukwu/go-web-app/pkg/config"
+	"github.com/Nnamdichukwu/go-web-app/pkg/models"
 	"github.com/Nnamdichukwu/go-web-app/pkg/renders"
 )
+
 //Repo is the repository used by the handlers
 var Repo *Repository
 
@@ -24,12 +26,16 @@ func NewHandlers (r *Repository){
 	Repo = r
 }
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request){
-	renders.RenderTemplate(w, "home.page.gohtml")
+	renders.RenderTemplate(w, "home.page.gohtml", &models.TemplateData{})
 }
 
 func (m *Repository) About(w http.ResponseWriter, r *http.Request){
-	renders.RenderTemplate(w, "about.page.gohtml")
 	
+	stringMap := map[string]string {}
+	stringMap["test"] = "Hello Again"
+	renders.RenderTemplate(w, "about.page.gohtml", &models.TemplateData{
+		StringMap: stringMap,
+	})
 }
 
 

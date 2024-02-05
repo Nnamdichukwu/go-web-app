@@ -8,13 +8,18 @@ import (
 	"path/filepath"
 
 	"github.com/Nnamdichukwu/go-web-app/pkg/config"
+	"github.com/Nnamdichukwu/go-web-app/pkg/models"
 )
 var app *config.AppConfig
 //NewTemplates sets the template of the app config
 func NewTemplates(a *config.AppConfig){
 	app = a
 }
-func RenderTemplate(w http.ResponseWriter, tmpl string){
+
+func AddDefaultData (td *models.TemplateData) *models.TemplateData{
+	return td 
+}
+func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData){
 	//get the template cache from the app config
 	var tc map[string]*template.Template
 	if app.UseCache {
@@ -24,16 +29,14 @@ func RenderTemplate(w http.ResponseWriter, tmpl string){
 		
 
 	}
-	
-	
-
 	t,ok := tc[tmpl]
 
 	if !ok{
 		log.Fatal("could not get template from template cache")
 	}
 	buf := new(bytes.Buffer)
-	err := t.Execute(buf, nil)
+	td = AddDefaultData(td)
+	err := t.Execute(buf, td)
 	if err != nil {
 		log.Println(err)
 	}
