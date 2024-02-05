@@ -36,6 +36,7 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request){
 	renders.RenderTemplate(w, "about.page.gohtml", &models.TemplateData{
 		StringMap: stringMap,
 	})
+	
 }
 
 
