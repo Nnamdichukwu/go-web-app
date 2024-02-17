@@ -1,12 +1,14 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
-	"github.com/Nnamdichukwu/go-web-app/pkg/config"
-	"github.com/Nnamdichukwu/go-web-app/pkg/models"
-	"github.com/Nnamdichukwu/go-web-app/pkg/renders"
+	"github.com/Nnamdichukwu/go-web-app/internal/config"
+	"github.com/Nnamdichukwu/go-web-app/internal/models"
+	"github.com/Nnamdichukwu/go-web-app/internal/renders"
 )
 
 //Repo is the repository used by the handlers
@@ -69,6 +71,26 @@ func (m *Repository)PostAvailability(w http.ResponseWriter, r *http.Request){
 	end := r.Form.Get("end") 
 	 
 	w.Write([]byte(fmt.Sprintf("start date is %s and end date is %s ", start, end)))
+
+	
+}
+type jsonResponse struct{
+	OK 		bool `json: "ok`
+	Message string `json:"message"`
+}
+func (m *Repository)AvailabilityJSON(w http.ResponseWriter, r *http.Request){
+	resp := jsonResponse{
+		OK: true, 
+		Message: "Available",
+	}
+	out, err := json.MarshalIndent(resp, "", "    ")
+	if err != nil {
+		log.Println(err)
+	}
+	
+	//This tells the browser what type of content i am sending
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(out)
 
 	
 }

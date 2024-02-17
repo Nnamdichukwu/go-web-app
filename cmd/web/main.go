@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Nnamdichukwu/go-web-app/pkg/config"
-	"github.com/Nnamdichukwu/go-web-app/pkg/handlers"
-	"github.com/Nnamdichukwu/go-web-app/pkg/renders"
+	"github.com/Nnamdichukwu/go-web-app/internal/config"
+	"github.com/Nnamdichukwu/go-web-app/internal/handlers"
+	"github.com/Nnamdichukwu/go-web-app/internal/renders"
 	"github.com/alexedwards/scs/v2"
 )
 const portNumber = ":8080"

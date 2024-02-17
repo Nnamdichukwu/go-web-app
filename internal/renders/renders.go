@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/Nnamdichukwu/go-web-app/pkg/config"
-	"github.com/Nnamdichukwu/go-web-app/pkg/models"
+	"github.com/Nnamdichukwu/go-web-app/internal/config"
+	"github.com/Nnamdichukwu/go-web-app/internal/models"
 	"github.com/justinas/nosurf"
 )
 var app *config.AppConfig
