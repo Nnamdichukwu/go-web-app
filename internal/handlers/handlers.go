@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/Nnamdichukwu/go-web-app/internal/config"
+	"github.com/Nnamdichukwu/go-web-app/internal/forms"
 	"github.com/Nnamdichukwu/go-web-app/internal/models"
 	"github.com/Nnamdichukwu/go-web-app/internal/renders"
 )
@@ -58,8 +59,42 @@ func (m *Repository)Majors(w http.ResponseWriter, r *http.Request){
 	renders.RenderTemplate(w,r, "majors.page.gohtml", &models.TemplateData{})
 }
 func (m *Repository)Reservation(w http.ResponseWriter, r *http.Request){
+	var emptyReservation models.Reservation
+	data := make(map[string]interface{})
+	data["reservation"] = emptyReservation
+	renders.RenderTemplate(w,r, "make-reservation.page.gohtml", &models.TemplateData{
+		Form: forms.New(nil),
+		Data: data,
+	})
+}
+func (m *Repository)PostReservation(w http.ResponseWriter, r *http.Request){
+	 if err := r.ParseForm(); err != nil{
+		log.Println(err)
+		return
+	 }
+
+	 reservation := models.Reservation{
+		FirstName: r.Form.Get("first_name"),
+		LastName: r.Form.Get("last_name"),
+		Email: r.Form.Get("email"),
+		Phone: r.Form.Get("phone"),
+	 }
+
+	 form := forms.New(r.PostForm)
+
+	 form.Has("first_name",r)
+
+	 if !form.Valid(){
+		data := make(map[string]interface{})
+		data["reservation"] = reservation
+		renders.RenderTemplate(w,r, "make-reservation.page.gohtml", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+
+	 }
+
 	
-	renders.RenderTemplate(w,r, "make-reservation.page.gohtml", &models.TemplateData{})
 }
 func (m *Repository)SearchAvailability(w http.ResponseWriter, r *http.Request){
 	
